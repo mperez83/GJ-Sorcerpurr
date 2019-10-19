@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
 
     float attackInterval;
     public float attackIntervalLength;
+    bool fireballPowerupActive = false;
+    float fireballPowerupTimer;
 
     public GameObject fireballPrefab;
 
@@ -39,6 +41,16 @@ public class PlayerController : MonoBehaviour
 
             //Attack
             attackInterval -= Time.deltaTime;
+            if (fireballPowerupActive == true)
+            {
+                attackInterval = 0;
+                fireballPowerupTimer -= Time.deltaTime;
+                if (fireballPowerupTimer <= 0)
+                {
+                    fireballPowerupActive = false;
+                    fireballPowerupTimer = 0;
+                }
+            }
 
             if (Input.GetMouseButton(0) && attackInterval <= 0)
             {
@@ -47,6 +59,20 @@ public class PlayerController : MonoBehaviour
                 GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
                 newFireball.transform.rotation = transform.rotation;
             }
+        }
+    }
+
+    public void ActivatePowerup(Powerup.PowerupType powerupType)
+    {
+        switch (powerupType)
+        {
+            case Powerup.PowerupType.Fireball:
+                fireballPowerupActive = true;
+                fireballPowerupTimer = 8f;
+                break;
+
+            case Powerup.PowerupType.Catpaw:
+                break;
         }
     }
 }
