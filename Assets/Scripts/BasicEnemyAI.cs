@@ -8,7 +8,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     void Update()
     {
-        Vector2 moveAmount = new Vector2(0, -speed);
+        Vector2 moveAmount = new Vector2(speed, 0);
         transform.Translate(moveAmount * Time.deltaTime);
     }
 
