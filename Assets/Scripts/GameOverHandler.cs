@@ -9,12 +9,16 @@ public class GameOverHandler : MonoBehaviour
     public static GameOverHandler instance;
 
     public TextMeshProUGUI newHighscoreText;
+    public GameObject leftSecret;
+    public GameObject rightSecret;
 
 
 
     void Start()
     {
         instance = this;
+        if (Random.Range(0, 100) == 0) leftSecret.SetActive(true);
+        if (Random.Range(0, 100) == 0) rightSecret.SetActive(true);
     }
 
     public void ActivateGameOver()

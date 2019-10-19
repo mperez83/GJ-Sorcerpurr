@@ -14,7 +14,7 @@ public class Powerup : MonoBehaviour
 
     void Start()
     {
-        LeanTween.delayedCall(5f, () =>
+        LeanTween.delayedCall(gameObject, 5f, () =>
         {
             LeanTween.scale(gameObject, Vector3.zero, 5).setOnComplete(() =>
             {
