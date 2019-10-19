@@ -12,8 +12,16 @@ public class BasicEnemyAI : MonoBehaviour
         transform.Translate(moveAmount * Time.deltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        GameOverHandler.instance.ActivateGameOver();
+        if (other.CompareTag("Door"))
+        {
+            GameOverHandler.instance.ActivateGameOver();
+        }
+        else if (other.CompareTag("Fireball"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

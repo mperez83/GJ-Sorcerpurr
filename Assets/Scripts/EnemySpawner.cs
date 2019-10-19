@@ -5,7 +5,12 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     float spawnTimer;
-    public float spawnTimerLength;
+    float spawnTimerLength;
+    public float initialSpawnTimerLength;
+
+    float ttzstlTimer;
+    public float timeToZeroSpawnTimerLength;
+
     public LayerMask interactionMask;
 
     public GameObject enemyPrefab;
@@ -14,11 +19,18 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        spawnTimerLength = initialSpawnTimerLength;
         spawnTimer = spawnTimerLength;
+        ttzstlTimer = timeToZeroSpawnTimerLength;
     }
 
     void Update()
     {
+        ttzstlTimer -= Time.deltaTime;
+        if (ttzstlTimer < 0) ttzstlTimer = 0;
+
+        spawnTimerLength = initialSpawnTimerLength * (ttzstlTimer / timeToZeroSpawnTimerLength);
+
         spawnTimer -= Time.deltaTime;
         if (spawnTimer <= 0)
         {
@@ -28,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
             Vector2 direction = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized; 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 100f, interactionMask);
             
-            Debug.DrawRay(transform.position, direction * hit.distance, Color.red, 1f);
+            //Debug.DrawRay(transform.position, direction * hit.distance, Color.red, 1f);
             if (hit)
             {
                 GameObject newEnemy = Instantiate(enemyPrefab, hit.point, Quaternion.identity);

@@ -22,12 +22,20 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
+            //Point the player towards the mouse position
             Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+            //Move the player
             Vector2 moveAmount = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             transform.Translate(moveAmount * moveSpeed * Time.deltaTime, Space.World);
+
+            //Constrain the player to within the screen
+            if (transform.position.y > GameMaster.instance.screenTopEdge) transform.position = new Vector2(transform.position.x, GameMaster.instance.screenTopEdge);
+            if (transform.position.y < GameMaster.instance.screenBottomEdge) transform.position = new Vector2(transform.position.x, GameMaster.instance.screenBottomEdge);
+            if (transform.position.x < GameMaster.instance.screenLeftEdge) transform.position = new Vector2(GameMaster.instance.screenLeftEdge, transform.position.y);
+            if (transform.position.x > GameMaster.instance.screenRightEdge) transform.position = new Vector2(GameMaster.instance.screenRightEdge, transform.position.y);
 
             //Attack
             attackInterval -= Time.deltaTime;
