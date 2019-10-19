@@ -20,6 +20,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else if (other.CompareTag("Fireball"))
         {
+            ScoreUI.instance.AddScore(1);
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster instance;
 
     [HideInInspector]
-    public float highScore = 0;
+    public float highscore = 0;
 
     [HideInInspector]
     public float screenTopEdge;
