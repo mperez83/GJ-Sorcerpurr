@@ -24,7 +24,7 @@ public class Fireball : MonoBehaviour
         while (mainDeg > 360) mainDeg = mainDeg - 360;
         sinVal = sinIntensity * Mathf.Sin(mainDeg * Mathf.Deg2Rad);
 
-        transform.Translate(new Vector2(speed, sinVal) * Time.deltaTime);
+        transform.Translate(new Vector2(sinVal, -speed) * Time.deltaTime);
 
         if (GameMaster.instance.GetIfOutOfBounds(transform.position)) Destroy(gameObject);
     }

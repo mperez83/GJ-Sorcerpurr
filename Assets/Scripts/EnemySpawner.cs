@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
                 GameObject newEnemy = Instantiate(enemyPrefab, hit.point, Quaternion.identity);
                 Vector3 dir = transform.position - newEnemy.transform.position;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                newEnemy.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                newEnemy.transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
             }
         }
     }
