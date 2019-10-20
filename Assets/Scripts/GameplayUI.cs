@@ -27,6 +27,7 @@ public class GameplayUI : MonoBehaviour
         if (blankCount > 0)
         {
             blankCount--;
+            GetComponent<AudioSource>().Play();
 
             switch (blankCount)
             {

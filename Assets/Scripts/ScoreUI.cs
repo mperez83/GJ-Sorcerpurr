@@ -8,6 +8,9 @@ public class ScoreUI : MonoBehaviour
     public static ScoreUI instance;
 
     int score;
+    int nextMeowScore = 100;
+
+    public PlayerController player;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
@@ -36,5 +39,11 @@ public class ScoreUI : MonoBehaviour
     {
         score += amount;
         scoreText.text = "Score: " + score.ToString();
+
+        if (score >= nextMeowScore)
+        {
+            nextMeowScore += 100;
+            player.GetComponent<AudioSource>().Play();
+        }
     }
 }

@@ -49,9 +49,9 @@ MonoBehaviour:
   health: 1
   speed: 3
   scoreValue: 1
-  powerupDropPercentageChance: 2
+  powerupDropPercentageChance: 10
   powerupPrefabs:
-  - {fileID: 413268602142134274, guid: 7934eb31e9b427c4a8891b80047921f8, type: 3}
+  - {fileID: 413268602142134274, guid: e835a56164ed4964a9487717b5fc9cfc, type: 3}
 --- !u!212 &543625175695495216
 SpriteRenderer:
   m_ObjectHideFlags: 0

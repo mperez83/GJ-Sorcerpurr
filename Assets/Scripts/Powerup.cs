@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    public enum PowerupType { AttackSpeed, Catpaw };
+    public enum PowerupType { TripleShot, AttackSpeed, Catpaw };
     public PowerupType powerupType;
 
     float mainDeg;
@@ -41,6 +41,7 @@ public class Powerup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().ActivatePowerup(powerupType);
+            Destroy(GetComponent<CircleCollider2D>());
             audioSource.Play();
 
             LeanTween.cancel(gameObject);

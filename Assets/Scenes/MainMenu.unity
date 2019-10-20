@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457d8051f32401042baa1223b7af2ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuMusic: {fileID: 0}
-  gameMusic: {fileID: 0}
+  mainMenuMusic: {fileID: 8300000, guid: d7e0fd1f9d93d444698ae1173a9afe24, type: 3}
+  gameMusic: {fileID: 8300000, guid: 3eadb1df1fd5b08469af5c73f1a50b14, type: 3}
   highscore: 0
   screenTopEdge: 0
   screenBottomEdge: 0
@@ -183,13 +183,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

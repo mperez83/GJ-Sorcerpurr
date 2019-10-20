@@ -38,6 +38,7 @@ public class GameMaster : MonoBehaviour
         DontDestroyOnLoad(this);
 
         audioSource = GetComponent<AudioSource>();
+        PlayMainMenuMusic();
 
         Cursor.lockState = CursorLockMode.Confined;
     }

@@ -11,19 +11,15 @@ public class PlayerController : MonoBehaviour
 
     bool attackSpeedPowerupActive = false;
     bool catPawPowerupActive = false;
+    bool tripleShotPowerupActive = false;
 
     public GameObject fireballPrefab;
     public GameObject catPawPrefab;
-
-    AudioSource audioSource;
-    public AudioClip fireballShoot;
-    public AudioClip catPawShoot;
 
 
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         attackInterval = attackIntervalLength;
     }
 
@@ -56,14 +52,21 @@ public class PlayerController : MonoBehaviour
                 //Ultra super hyper attack??
                 if (catPawPowerupActive && attackSpeedPowerupActive)
                 {
+                    
                     GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
                     newFireball.transform.rotation = transform.rotation;
 
+                    if (tripleShotPowerupActive == true)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            GameObject moreFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                            moreFireball.transform.rotation = transform.rotation;
+                        }
+                    }
+
                     GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
                     newCatpaw.transform.rotation = transform.rotation;
-
-                    audioSource.clip = catPawShoot;
-                    audioSource.Play();
                 }
 
                 //Cat paw attack
@@ -72,9 +75,6 @@ public class PlayerController : MonoBehaviour
                     GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
                     newCatpaw.transform.rotation = transform.rotation;
                     attackInterval = 0.5f;
-
-                    audioSource.clip = catPawShoot;
-                    audioSource.Play();
                 }
 
                 //Attack speed active
@@ -83,8 +83,14 @@ public class PlayerController : MonoBehaviour
                     GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
                     newFireball.transform.rotation = transform.rotation;
 
-                    audioSource.clip = fireballShoot;
-                    audioSource.Play();
+                    if (tripleShotPowerupActive == true)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            GameObject moreFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                            moreFireball.transform.rotation = transform.rotation;
+                        }
+                    }
                 }
 
                 //Normal fireball attack
@@ -94,8 +100,14 @@ public class PlayerController : MonoBehaviour
                     newFireball.transform.rotation = transform.rotation;
                     attackInterval = attackIntervalLength;
 
-                    audioSource.clip = fireballShoot;
-                    audioSource.Play();
+                    if (tripleShotPowerupActive == true)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            GameObject moreFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                            moreFireball.transform.rotation = transform.rotation;
+                        }
+                    }
                 }
             }
 
@@ -120,6 +132,11 @@ public class PlayerController : MonoBehaviour
             case Powerup.PowerupType.Catpaw:
                 catPawPowerupActive = true;
                 LeanTween.delayedCall(gameObject, 8f, () => { catPawPowerupActive = false; });
+                break;
+
+            case Powerup.PowerupType.TripleShot:
+                tripleShotPowerupActive = true;
+                LeanTween.delayedCall(gameObject, 8f, () => { tripleShotPowerupActive = false; });
                 break;
         }
     }
