@@ -10,10 +10,14 @@ public class Powerup : MonoBehaviour
     float mainDeg;
     float sinVal;
 
+    AudioSource audioSource;
+
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         LeanTween.delayedCall(gameObject, 5f, () =>
         {
             LeanTween.scale(gameObject, Vector3.zero, 5).setOnComplete(() =>
@@ -37,8 +41,15 @@ public class Powerup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().ActivatePowerup(powerupType);
+            audioSource.Play();
+
             LeanTween.cancel(gameObject);
-            Destroy(gameObject);
+            LeanTween.scale(gameObject, transform.localScale * 1.25f, 0.5f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.alpha(gameObject, 0, 0.5f).setOnComplete(() =>
+            {
+                LeanTween.cancel(gameObject);
+                Destroy(gameObject);
+            });
         }
     }
 }

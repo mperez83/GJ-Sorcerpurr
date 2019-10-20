@@ -50,6 +50,15 @@ public class BasicEnemyAI : MonoBehaviour
         sr.color = new Color(1, 1 - damageTintStrength, 1 - damageTintStrength);
     }
 
+
+
+    public void GiveKillRewards()
+    {
+        ScoreUI.instance.AddScore(scoreValue);
+        if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
+            Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Door"))
@@ -64,11 +73,7 @@ public class BasicEnemyAI : MonoBehaviour
 
             if (health <= 0)
             {
-                ScoreUI.instance.AddScore(scoreValue);
-                if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
-                    Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
-
-                //CameraShakeHandler.instance.SetIntensity(0.1f);
+                GiveKillRewards();
                 Destroy(gameObject);
             }
         }
@@ -79,9 +84,7 @@ public class BasicEnemyAI : MonoBehaviour
 
             if (health <= 0)
             {
-                ScoreUI.instance.AddScore(scoreValue);
-                if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
-                    Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
+                GiveKillRewards();
 
                 obliterated = true;
                 obliteratedAngle = other.transform.localEulerAngles.z - 90 + Random.Range(-45f, 45f);

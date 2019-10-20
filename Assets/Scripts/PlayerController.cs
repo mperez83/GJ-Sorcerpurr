@@ -15,10 +15,15 @@ public class PlayerController : MonoBehaviour
     public GameObject fireballPrefab;
     public GameObject catPawPrefab;
 
+    AudioSource audioSource;
+    public AudioClip fireballShoot;
+    public AudioClip catPawShoot;
+
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         attackInterval = attackIntervalLength;
     }
 
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
             attackInterval -= Time.deltaTime;
             if (attackSpeedPowerupActive == true) attackInterval = 0;
 
+            //Left click
             if (Input.GetMouseButton(0) && attackInterval <= 0)
             {
                 //Ultra super hyper attack??
@@ -55,6 +61,9 @@ public class PlayerController : MonoBehaviour
 
                     GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
                     newCatpaw.transform.rotation = transform.rotation;
+
+                    audioSource.clip = catPawShoot;
+                    audioSource.Play();
                 }
 
                 //Cat paw attack
@@ -63,6 +72,9 @@ public class PlayerController : MonoBehaviour
                     GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
                     newCatpaw.transform.rotation = transform.rotation;
                     attackInterval = 0.5f;
+
+                    audioSource.clip = catPawShoot;
+                    audioSource.Play();
                 }
 
                 //Attack speed active
@@ -70,6 +82,9 @@ public class PlayerController : MonoBehaviour
                 {
                     GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
                     newFireball.transform.rotation = transform.rotation;
+
+                    audioSource.clip = fireballShoot;
+                    audioSource.Play();
                 }
 
                 //Normal fireball attack
@@ -78,10 +93,20 @@ public class PlayerController : MonoBehaviour
                     GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
                     newFireball.transform.rotation = transform.rotation;
                     attackInterval = attackIntervalLength;
+
+                    audioSource.clip = fireballShoot;
+                    audioSource.Play();
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameplayUI.instance.UseBlank();
             }
         }
     }
+
+
 
     public void ActivatePowerup(Powerup.PowerupType powerupType)
     {
