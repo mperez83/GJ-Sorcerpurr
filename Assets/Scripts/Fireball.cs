@@ -15,7 +15,8 @@ public class Fireball : MonoBehaviour
 
     void Start()
     {
-        mainDeg = 90;
+        mainDeg = Random.Range(45f, 135f);
+        if (Random.Range(0, 2) == 0) mainDeg += 180;
     }
 
     void Update()

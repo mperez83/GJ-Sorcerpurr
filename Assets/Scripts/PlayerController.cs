@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
 
     float attackInterval;
     public float attackIntervalLength;
-    bool fireballPowerupActive = false;
-    float fireballPowerupTimer;
+
+    bool attackSpeedPowerupActive = false;
+    bool catPawPowerupActive = false;
 
     public GameObject fireballPrefab;
+    public GameObject catPawPrefab;
 
 
 
@@ -41,23 +43,42 @@ public class PlayerController : MonoBehaviour
 
             //Attack
             attackInterval -= Time.deltaTime;
-            if (fireballPowerupActive == true)
-            {
-                attackInterval = 0;
-                fireballPowerupTimer -= Time.deltaTime;
-                if (fireballPowerupTimer <= 0)
-                {
-                    fireballPowerupActive = false;
-                    fireballPowerupTimer = 0;
-                }
-            }
+            if (attackSpeedPowerupActive == true) attackInterval = 0;
 
             if (Input.GetMouseButton(0) && attackInterval <= 0)
             {
-                attackInterval = attackIntervalLength;
+                //Ultra super hyper attack??
+                if (catPawPowerupActive && attackSpeedPowerupActive)
+                {
+                    GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                    newFireball.transform.rotation = transform.rotation;
 
-                GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
-                newFireball.transform.rotation = transform.rotation;
+                    GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
+                    newCatpaw.transform.rotation = transform.rotation;
+                }
+
+                //Cat paw attack
+                else if (catPawPowerupActive)
+                {
+                    GameObject newCatpaw = Instantiate(catPawPrefab, transform.position, Quaternion.identity);
+                    newCatpaw.transform.rotation = transform.rotation;
+                    attackInterval = 0.5f;
+                }
+
+                //Attack speed active
+                else if (attackSpeedPowerupActive)
+                {
+                    GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                    newFireball.transform.rotation = transform.rotation;
+                }
+
+                //Normal fireball attack
+                else
+                {
+                    GameObject newFireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+                    newFireball.transform.rotation = transform.rotation;
+                    attackInterval = attackIntervalLength;
+                }
             }
         }
     }
@@ -66,12 +87,14 @@ public class PlayerController : MonoBehaviour
     {
         switch (powerupType)
         {
-            case Powerup.PowerupType.Fireball:
-                fireballPowerupActive = true;
-                fireballPowerupTimer = 8f;
+            case Powerup.PowerupType.AttackSpeed:
+                attackSpeedPowerupActive = true;
+                LeanTween.delayedCall(gameObject, 8f, () => { attackSpeedPowerupActive = false; });
                 break;
 
             case Powerup.PowerupType.Catpaw:
+                catPawPowerupActive = true;
+                LeanTween.delayedCall(gameObject, 8f, () => { catPawPowerupActive = false; });
                 break;
         }
     }

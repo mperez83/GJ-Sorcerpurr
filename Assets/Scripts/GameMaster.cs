@@ -6,6 +6,10 @@ public class GameMaster : MonoBehaviour
 {
     public static GameMaster instance;
 
+    AudioSource audioSource;
+    public AudioClip mainMenuMusic;
+    public AudioClip gameMusic;
+
     [HideInInspector]
     public float highscore = 0;
 
@@ -33,6 +37,8 @@ public class GameMaster : MonoBehaviour
         }
         DontDestroyOnLoad(this);
 
+        audioSource = GetComponent<AudioSource>();
+
         Cursor.lockState = CursorLockMode.Confined;
     }
 
@@ -42,6 +48,20 @@ public class GameMaster : MonoBehaviour
         screenBottomEdge = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -(Camera.main.transform.position.z))).y;
         screenLeftEdge = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -(Camera.main.transform.position.z))).x;
         screenRightEdge = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, -(Camera.main.transform.position.z))).x;
+    }
+
+
+
+    public void PlayMainMenuMusic()
+    {
+        audioSource.clip = mainMenuMusic;
+        audioSource.Play();
+    }
+
+    public void PlayGameMusic()
+    {
+        audioSource.clip = gameMusic;
+        audioSource.Play();
     }
 
     public bool GetIfOutOfBounds(Vector2 pos)

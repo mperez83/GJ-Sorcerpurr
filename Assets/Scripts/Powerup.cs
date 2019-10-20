@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    public enum PowerupType { Fireball, Catpaw };
+    public enum PowerupType { AttackSpeed, Catpaw };
     public PowerupType powerupType;
 
     float mainDeg;

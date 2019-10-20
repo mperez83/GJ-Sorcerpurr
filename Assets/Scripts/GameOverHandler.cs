@@ -45,6 +45,7 @@ public class GameOverHandler : MonoBehaviour
     public void MainMenuButton()
     {
         Time.timeScale = 1;
+        GameMaster.instance.PlayMainMenuMusic();
         SceneManager.LoadScene("MainMenu");
     }
 }

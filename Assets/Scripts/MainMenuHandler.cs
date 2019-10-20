@@ -15,6 +15,12 @@ public class MainMenuHandler : MonoBehaviour
 
     public void PlayButton()
     {
+        GameMaster.instance.PlayGameMusic();
         SceneManager.LoadScene("Main");
+    }
+
+    public void CreditsButton()
+    {
+        SceneManager.LoadScene("Credits");
     }
 }
