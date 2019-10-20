@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BasicEnemyAI : MonoBehaviour
 {
+    public int health;
     public float speed;
     public int scoreValue;
+
+    float damageTintStrength;
 
     [Range(0, 100)]
     public int powerupDropPercentageChance;
@@ -16,7 +19,14 @@ public class BasicEnemyAI : MonoBehaviour
     float obliteratedForce;
     float obliteratedRotateSpeed;
 
+    SpriteRenderer sr;
 
+
+
+    void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
@@ -33,6 +43,11 @@ public class BasicEnemyAI : MonoBehaviour
             transform.Rotate(new Vector3(0, 0, obliteratedRotateSpeed * 10) * Time.deltaTime);
             if (GameMaster.instance.GetIfOutOfBounds(transform.position)) Destroy(gameObject);
         }
+
+        //Handle damage tinting
+        damageTintStrength -= Time.deltaTime * 5;
+        if (damageTintStrength < 0) damageTintStrength = 0;
+        sr.color = new Color(1, 1 - damageTintStrength, 1 - damageTintStrength);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -43,28 +58,39 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else if (other.CompareTag("Fireball"))
         {
-            ScoreUI.instance.AddScore(scoreValue);
-            if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
-                Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
-
-            //CameraShakeHandler.instance.SetIntensity(0.1f);
-
+            health -= 1;
+            damageTintStrength = 0.8f;
             Destroy(other.gameObject);
-            Destroy(gameObject);
+
+            if (health <= 0)
+            {
+                ScoreUI.instance.AddScore(scoreValue);
+                if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
+                    Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
+
+                //CameraShakeHandler.instance.SetIntensity(0.1f);
+                Destroy(gameObject);
+            }
         }
         else if (other.CompareTag("Catpaw"))
         {
-            ScoreUI.instance.AddScore(scoreValue);
-            if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
-                Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
+            health -= 10;
+            damageTintStrength = 1f;
 
-            obliterated = true;
-            obliteratedAngle = other.transform.localEulerAngles.z - 90 + Random.Range(-45f, 45f);
-            obliteratedForce = Random.Range(20f, 25f);
-            obliteratedRotateSpeed = (Random.Range(0, 2) == 0) ? Random.Range(-180f, -90f) : Random.Range(90f, 180f);
+            if (health <= 0)
+            {
+                ScoreUI.instance.AddScore(scoreValue);
+                if (powerupPrefabs.Length != 0 && Random.Range(0f, 1f) <= (powerupDropPercentageChance / 100f))
+                    Instantiate(powerupPrefabs[Random.Range(0, powerupPrefabs.Length)], transform.position, Quaternion.identity);
 
-            CameraShakeHandler.instance.SetIntensity(0.4f);
-            Destroy(GetComponent<Rigidbody2D>());
+                obliterated = true;
+                obliteratedAngle = other.transform.localEulerAngles.z - 90 + Random.Range(-45f, 45f);
+                obliteratedForce = Random.Range(20f, 25f);
+                obliteratedRotateSpeed = (Random.Range(0, 2) == 0) ? Random.Range(-180f, -90f) : Random.Range(90f, 180f);
+
+                CameraShakeHandler.instance.SetIntensity(0.4f);
+                Destroy(GetComponent<Rigidbody2D>());
+            }
         }
     }
 }

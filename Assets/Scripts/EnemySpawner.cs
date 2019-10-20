@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public LayerMask interactionMask;
 
     public GameObject[] enemyPrefabs;
+    public GameObject homunculusPrefab;
 
 
 
@@ -43,7 +44,12 @@ public class EnemySpawner : MonoBehaviour
             //Debug.DrawRay(transform.position, direction * hit.distance, Color.red, 1f);
             if (hit)
             {
-                GameObject newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], hit.point, Quaternion.identity);
+                GameObject newEnemy;
+                if (Random.Range(0, 100) == 0)
+                    newEnemy = Instantiate(homunculusPrefab, hit.point, Quaternion.identity);
+                else
+                    newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], hit.point, Quaternion.identity);
+
                 Vector3 dir = transform.position - newEnemy.transform.position;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 newEnemy.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

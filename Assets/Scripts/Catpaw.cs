@@ -6,7 +6,7 @@ public class Catpaw : MonoBehaviour
 {
     void Start()
     {
-        transform.Translate(new Vector2(0, -3));
+        transform.Translate(new Vector2(0, -1));
         LeanTween.alpha(gameObject, 0, 0.5f).setEase(LeanTweenType.easeInCubic).setOnComplete(() =>
         {
             Destroy(gameObject);
@@ -15,6 +15,6 @@ public class Catpaw : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(new Vector2(0, -2) * Time.deltaTime);
+        transform.Translate(new Vector2(0, -8) * Time.deltaTime);
     }
 }
