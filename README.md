@@ -1,5 +1,5 @@
 # GJ-Sorcerpurr
-Unity game submission for VGDC's Luigi's Jamsion 2019! In this game, you play as a cat that defends the outside world from internal horrors by shooting fireballs.
+Unity game submission for VGDC's Luigi's Jamsion! In this game, you play as a cat that defends the outside world from internal horrors by shooting fireballs.
 
 Play it here: https://taroble.itch.io/sorcerpurr
 
